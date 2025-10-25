@@ -56,6 +56,7 @@ button {
 button:hover { filter: brightness(1.1); }
 button:focus { outline: 3px solid var(--urple-700); outline-offset: 2px; }
 
+/* === Cards === */
 .card {
   background: var(--coal);
   border: 1px solid color-mix(in oklab, var(--urple-800) 50%, transparent);
@@ -158,24 +159,6 @@ button:focus { outline: 3px solid var(--urple-700); outline-offset: 2px; }
   color: #000;
 }
 
-/* === Hero image === */
-.hero-wrap {
-  position: relative;
-}
-.hero-img {
-  width: 240px;
-  border-radius: 20px;
-  box-shadow: 0 0 25px rgba(181,126,220,.35);
-}
-.hero-glow {
-  position: absolute;
-  inset: -15px;
-  border-radius: 30px;
-  background: radial-gradient(circle at center, rgba(181,126,220,.25), transparent 70%);
-  filter: blur(20px);
-  z-index: -1;
-}
-
 /* === Navigation === */
 .nav {
   display: flex;
@@ -217,12 +200,43 @@ footer {
   margin-top: 3rem;
   padding-top: 2rem;
 }
+
+/* === Hero image (cleaned) === */
+.hero-wrap {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 0 60px -10px var(--urple-500);
+}
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+}
+.hero-glow {
+  position: absolute;
+  inset: -15px;
+  border-radius: 30px;
+  background: radial-gradient(circle at center, rgba(181,126,220,.25), transparent 70%);
+  filter: blur(20px);
+  z-index: -1;
+}
+
 /* === Horizontal timeline (work rail) === */
-.hrail-wrap { position: relative; margin-top: .5rem; }
+.hrail-wrap {
+  position: relative;
+  margin-top: .5rem;
+  padding: 0 2.75rem;  /* space for arrows */
+  overflow: visible;   /* allows arrows outside the area */
+}
+
 .hrail {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: min(86vw, 520px);        /* card width */
+  grid-auto-columns: min(86vw, 520px);
   gap: 1.25rem;
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -232,53 +246,215 @@ footer {
 }
 .hrail::-webkit-scrollbar { display: none; }
 
-.hcard {
+..hcard {
   scroll-snap-align: start;
   background: var(--coal);
   border: 1px solid color-mix(in oklab, var(--urple-800) 50%, transparent);
   border-radius: 18px;
   box-shadow: 0 10px 25px -12px color-mix(in oklab, var(--urple-400) 30%, transparent);
-  padding: 1.4rem;
+  padding: 1.25rem 1.4rem;
   min-height: 200px;
-  display: flex; flex-direction: column; justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
-.hcard:hover { box-shadow: 0 16px 38px -14px rgba(181,126,220,.45); }
+.hcard:hover {
+  box-shadow: 0 16px 38px -14px rgba(181,126,220,.45);
+  transform: translateY(-2px);
+}
 
-.hsub { color: var(--muted); font-size: .95rem; }
-.htitle { font-weight: 800; margin-top: .25rem; }
-.hdate { color: var(--urple-300); font-size: .85rem; margin-top: .25rem; }
-.hdesc { color: var(--muted); font-size: .95rem; margin-top: .6rem; }
+/* smaller text tuning */
+.hsub { color: var(--muted); font-size: 0.9rem; }
+.htitle { font-weight: 700; margin-top: 0.25rem; font-size: 1.05rem; }
+.hdate { color: var(--urple-300); font-size: 0.8rem; margin-top: 0.25rem; }
+.hdesc { color: var(--muted); font-size: 0.9rem; margin-top: 0.6rem; }
 
-/* edge fade */
-.hrail-mask { mask-image: linear-gradient(90deg, transparent 0, black 36px, black calc(100% - 36px), transparent 100%); }
+/* chip row spacing */
+.hcard .chip {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.7rem;
+}
+
+/* smaller, centered button */
+.hcard .btn-outline {
+  align-self: center;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border-width: 1px;
+  background: transparent;
+}
+/* edge fade adjusted for wider arrows */
+.hrail-mask {
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    black 56px,
+    black calc(100% - 56px),
+    transparent 100%
+  );
+}
 
 /* nav buttons */
 .hnav {
-  position: absolute; top: 50%; translate: 0 -50%;
-  width: 40px; height: 40px; border-radius: 999px;
-  background: rgba(20,20,28,.6); border: 1px solid rgba(181,126,220,.35);
-  display: grid; place-items: center; cursor: pointer; user-select: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: rgba(20,20,28,.6);
+  border: 1px solid rgba(181,126,220,.35);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  user-select: none;
   backdrop-filter: blur(6px);
+  z-index: 10;
 }
-.hnav:hover { background: rgba(20,20,28,.85); }
-.hnav-left { left: -8px; }
-.hnav-right { right: -8px; }
+.hnav:hover {
+  background: rgba(20,20,28,.85);
+  transform: translateY(-50%) scale(1.06);
+}
+.hnav-left  { left: -2.75rem; }
+.hnav-right { right: -2.75rem; }
 .hnav svg { width: 18px; height: 18px; fill: var(--urple-400); }
-@media (max-width: 640px){ .hnav { display:none; } }
 
-.hero-wrap {
-  position: relative;
-  width: 340px;
-  height: 340px;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 0 60px -10px var(--urple-500);
+@media (max-width: 640px) {
+  .hnav { display: none; }
 }
 
-.hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* Smaller, centered repo button with readable hover */
+.hcard .btn-outline{
+  display: inline-block;
+  margin: 0.9rem auto 0;   /* centers it in the card */
+  font-size: 0.82rem;
+  line-height: 1;
+  padding: 0.42rem 0.85rem;
+  border: 1px solid var(--urple-400);
+  color: var(--urple-300);          /* subtle default */
+  background: transparent;
+  border-radius: 999px;
+}
+
+.hcard .btn-outline:hover{
+  /* keep contrast on dark background */
+  background: color-mix(in oklab, var(--urple-400) 25%, transparent);
+  color: #fff;                      /* readable on hover */
+  border-color: var(--urple-400);
+}
+
+/* Narrow the left/right fade so text isn't clipped */
+.hrail-mask{
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    black 28px,                         /* was 56px */
+    black calc(100% - 28px),
+    transparent 100%
+  );
+}
+
+/* Let snap/scroll respect the new safe edges */
+.hrail{
+  scroll-padding-left: 28px;
+  scroll-padding-right: 28px;
+}
+
+@media (min-width: 900px){
+  .hrail-mask{ mask-image: none; }
+}
+
+/* === Refined rounded & bordered cards (Urple aesthetic) === */
+.hcard, .card {
+  border: 1px solid color-mix(in oklab, var(--urple-500) 60%, transparent);
+  border-radius: 24px; /* smooth, friendly curves */
+  background: color-mix(in oklab, var(--coal) 88%, var(--urple-900) 12%);
+  box-shadow: 0 10px 25px -12px color-mix(in oklab, var(--urple-400) 25%, transparent);
+  padding: 1.3rem 1.5rem;
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* Hover depth + soft inner glow */
+.hcard:hover, .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px -10px color-mix(in oklab, var(--urple-400) 45%, transparent);
+  border-color: color-mix(in oklab, var(--urple-400) 80%, transparent);
+  background: radial-gradient(
+      circle at top left,
+      rgba(181,126,220,0.06),
+      transparent 80%
+    ),
+    color-mix(in oklab, var(--coal) 85%, var(--urple-900) 15%);
+}
+
+/* Consistent rounded shape for work cards */
+.hcard {
+  min-height: 200px;
+  text-align: left;
   border-radius: 24px;
+  position: relative;
+}
+
+/* Optional subtle ring glow on hover */
+.hcard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  pointer-events: none;
+  box-shadow: 0 0 0 0 rgba(181,126,220,0.0);
+  transition: box-shadow 0.3s ease;
+}
+.hcard:hover::before {
+  box-shadow: 0 0 15px 2px rgba(181,126,220,0.35);
+}
+
+/* Match nav buttons’ curve + border to new card style */
+.hnav {
+  border-radius: 50%;
+  border: 1px solid color-mix(in oklab, var(--urple-400) 45%, transparent);
+  background: rgba(20,20,28,.65);
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.hnav:hover {
+  background: rgba(20,20,28,.85);
+  border-color: var(--urple-400);
+}
+
+/* === Fix button hover readability === */
+
+/* Primary (filled purple) button */
+.btn-primary {
+  background: var(--urple-500);
+  color: #000; /* readable default */
+  border: none;
+  transition: all 0.25s ease;
+}
+.btn-primary:hover {
+  background: color-mix(in oklab, var(--urple-400) 65%, var(--urple-500) 35%);
+  color: #fff; /* readable on hover */
+  box-shadow: 0 0 14px -2px rgba(181,126,220,0.6);
+}
+
+/* Outline button */
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--urple-400);
+  color: var(--urple-400);
+  transition: all 0.25s ease;
+}
+.btn-outline:hover {
+  background: var(--urple-400);
+  color: #000; /* strong contrast on hover */
+  box-shadow: 0 0 14px -2px rgba(181,126,220,0.4);
 }
 

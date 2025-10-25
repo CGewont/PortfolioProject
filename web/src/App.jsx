@@ -13,24 +13,56 @@ export default function App() {
   // --- Recent Work (horizontal rail) ---
   const projects = [
     {
+      title: "Portfolio Website (React + Go)",
+      sub: "Full-stack Project",
+      desc: "Urple-themed portfolio (Vite + React) with Go API, horizontal timeline, and dark aesthetic.",
+      date: "2025-10-24",
+      href: "https://github.com/CGewont/PortfolioProject",
+      tags: ["React", "Vite", "Go", "UI/UX"],
+    },
+    {
       title: "Phishing Triage Automation",
       sub: "Detections + Playbooks",
-      desc: "Header parsing & URL detonation; cut MTTR by ~40%.",
+      desc: "Header parsing, indicator extraction, and detonation workflow for reducing MTTR.",
       date: "2025-09-10",
+      tags: ["Email Sec", "Automation", "Playbooks"],
     },
     {
-      title: "Zeek + Suricata Lab",
-      sub: "Network Forensics",
-      desc: "Repeatable lab; PCAP → Zeek logs → pivots; hunting queries.",
-      date: "2025-07-01",
-    },
-    {
-      title: "Sentinel Wi-Fi Anomalies",
+      title: "Wi-Fi Anomaly Detection in Sentinel",
       sub: "KQL + Workbook",
-      desc: "Auth anomalies, AP/client drift visualizations and alerts.",
-      date: "2025-05-22",
+      desc: "Auth anomaly detection, drift visualizations, and custom workbook dashboards.",
+      date: "2025-08-12",
+      tags: ["Azure Sentinel", "KQL", "Wireless"],
     },
-  ].sort((a, b) => (a.date < b.date ? 1 : -1)); // newest first
+    {
+      title: "Network Forensics: PCAP → Findings",
+      sub: "Wireshark + Zeek",
+      desc: "Lab for traffic analysis and pivoting DNS/HTTP flows with Zeek outputs.",
+      date: "2025-07-01",
+      tags: ["Wireshark", "Zeek", "Forensics"],
+    },
+    {
+      title: "Cloud Benchmarking Suite",
+      sub: "Bash + sysbench/iperf3",
+      desc: "Performance benchmarking across EC2 metal vs VM instances; exportable CSV results.",
+      date: "2025-06-10",
+      tags: ["Bash", "sysbench", "iperf3", "AWS"],
+    },
+    {
+      title: "SIEM Content: QRadar & Splunk",
+      sub: "Dashboards + Detections",
+      desc: "Custom correlation rules, detection content tuning, and query dashboards.",
+      date: "2025-05-15",
+      tags: ["QRadar", "Splunk", "Detections"],
+    },
+    {
+      title: "IR/Blue-Team Labs",
+      sub: "TryHackMe + LetsDefend",
+      desc: "Incident investigations, hypothesis documentation, and event timeline practice.",
+      date: "2025-04-20",
+      tags: ["IR", "Blue Team", "Labs"],
+    },
+  ].sort((a, b) => (a.date < b.date ? 1 : -1));
 
   function formatDate(iso) {
     const d = new Date(iso);
@@ -98,7 +130,12 @@ export default function App() {
               </a>
             </div>
             <div
-              style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 16 }}
+              style={{
+                display: "flex",
+                gap: 8,
+                flexWrap: "wrap",
+                marginTop: 16,
+              }}
             >
               {[
                 "The Watcher",
@@ -146,8 +183,35 @@ export default function App() {
                   <div className="htitle">{p.title}</div>
                   <div className="hdate">{formatDate(p.date)}</div>
                   <p className="hdesc">{p.desc}</p>
+
+                  {p.tags && (
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: 8,
+                        flexWrap: "wrap",
+                        marginTop: 8,
+                      }}
+                    >
+                      {p.tags.map((t) => (
+                        <span key={t} className="chip">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                {/* <a className="btn btn-outline" href="#" target="_blank">Read more</a> */}
+
+                {p.href && (
+                  <a
+                    className="btn btn-outline"
+                    href={p.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View Repo
+                  </a>
+                )}
               </article>
             ))}
           </div>
@@ -188,7 +252,10 @@ export default function App() {
           {/* Programming & Development */}
           <div className="card">
             <h3 style={{ marginTop: 0 }}>Programming & Development</h3>
-            <ul className="loose" style={{ listStyle: "none", paddingLeft: 18, margin: 0 }}>
+            <ul
+              className="loose"
+              style={{ listStyle: "none", paddingLeft: 18, margin: 0 }}
+            >
               <li>
                 <strong>Languages:</strong>
                 <br />
@@ -198,22 +265,22 @@ export default function App() {
               <li>
                 <strong>Frameworks & Tools:</strong>
                 <br />
-                React, Vite, Node.js, Flask, Go (learning), Dune (OCaml), Git &amp;
+                React, Vite, Node.js, Flask, Go (learning), Dune (OCaml), Git &
                 GitHub, GitHub Actions
               </li>
 
               <li>
                 <strong>Scripting:</strong>
                 <br />
-                Bash automation for benchmarking, virtualization setup, file parsing,
-                and network testing
+                Bash automation for benchmarking, virtualization setup, file
+                parsing, and network testing
               </li>
 
               <li>
                 <strong>Version Control:</strong>
                 <br />
-                Git branching, commits, pull requests, and collaborative workflows via
-                GitHub
+                Git branching, commits, pull requests, and collaborative workflows
+                via GitHub
               </li>
             </ul>
           </div>
@@ -221,7 +288,10 @@ export default function App() {
           {/* Systems & Networking */}
           <div className="card">
             <h3 style={{ marginTop: 0 }}>Systems & Networking</h3>
-            <ul className="loose" style={{ listStyle: "none", paddingLeft: 18, margin: 0 }}>
+            <ul
+              className="loose"
+              style={{ listStyle: "none", paddingLeft: 18, margin: 0 }}
+            >
               <li>
                 <strong>Operating Systems:</strong>
                 <br />
@@ -231,7 +301,7 @@ export default function App() {
               <li>
                 <strong>Virtualization:</strong>
                 <br />
-                VirtualBox, KVM, Hyper-V, Chameleon Cloud, AWS EC2 (metal &amp; VM)
+                VirtualBox, KVM, Hyper-V, Chameleon Cloud, AWS EC2 (metal & VM)
               </li>
 
               <li>
@@ -259,7 +329,10 @@ export default function App() {
           {/* Cybersecurity */}
           <div className="card">
             <h3 style={{ marginTop: 0 }}>Cybersecurity</h3>
-            <ul className="loose" style={{ listStyle: "none", paddingLeft: 18, margin: 0 }}>
+            <ul
+              className="loose"
+              style={{ listStyle: "none", paddingLeft: 18, margin: 0 }}
+            >
               <li>
                 <strong>SIEM Platforms:</strong>
                 <br />
@@ -275,8 +348,8 @@ export default function App() {
               <li>
                 <strong>Threat Analysis:</strong>
                 <br />
-                Vulnerability scanning, incident triage, log correlation, NIST / ISO
-                27001 alignment
+                Vulnerability scanning, incident triage, log correlation, NIST /
+                ISO 27001 alignment
               </li>
 
               <li>
@@ -289,7 +362,7 @@ export default function App() {
               <li>
                 <strong>Frameworks:</strong>
                 <br />
-                NIST RMF, eMASS, MITRE ATT&amp;CK, ISO 27001
+                NIST RMF, eMASS, MITRE ATT&CK, ISO 27001
               </li>
 
               <li>
@@ -304,7 +377,10 @@ export default function App() {
           {/* Other Interests */}
           <div className="card">
             <h3 style={{ marginTop: 0 }}>Other Interests</h3>
-            <ul className="loose" style={{ listStyle: "none", paddingLeft: 18, margin: 0 }}>
+            <ul
+              className="loose"
+              style={{ listStyle: "none", paddingLeft: 18, margin: 0 }}
+            >
               <li>
                 <strong>Areas of Focus:</strong>
                 <br />
